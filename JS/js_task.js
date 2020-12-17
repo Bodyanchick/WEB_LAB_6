@@ -1,0 +1,134 @@
+
+$('.form_ochka').submit(function validate_form() 
+{
+
+    var msg = $('.form_ochka').serialize();
+    
+	let pib_p = /^[А-Яа-яІі\s]+$/;
+	let group_p = /^[А-Яа-яІі]{2,2}\-[0-9][0-9]$/;
+	let email_p = /^[a-z0-9._-]+\@[a-z0-9]+\.[a-z]{2,4}$/;
+	let yob = document.getElementById('yob_input').value;
+	let person = document.getElementById('pib_input').value;
+	let group = document.getElementById('group_input').value;
+	let email = document.getElementById('email_input').value;
+
+	
+
+	if(pib_p.test(person) == false && person != '')
+	{
+		$('#msginf').html('Помилка:</br>Ім\'я повинно бути введене українськими літерами');
+		return false;
+	}
+
+	if(group_p.test(group) == false && group != '')
+	{
+		$('#msginf').html('Помилка:</br>Поле групи повинне містити дві українські літери, дефіс та номер');
+		return false;
+	}
+
+	if(email_p.test(email) == false && email != '')
+	{
+		$('#msginf').html('Помилка:</br>Це не схоже на Email.');
+		return false;
+	}
+
+	else
+	{
+	    $.ajax({
+	         type: 'POST',
+	         url: './php_form.php',
+	         data: msg,
+	        success: function(data)
+	        { 
+	            $('#msginf').html(data);
+	        },
+	         error:  function(xhr, str) 
+	        {
+		    	alert('Виникла помилка: ' + xhr.responseCode);
+	        }
+	     });
+	    return false;
+	}
+
+
+
+});
+
+
+function openphp_1(){
+	$.post(
+		'./createdatabase.php',
+		function(msg){
+			$('#msgphp').html(msg);
+		}
+		);
+}
+
+function openphp_2(){
+	$.post(
+		'./createtable.php',
+		function(msg){
+			$('#msgphp').html(msg);
+		}
+		);
+}
+
+function openphp_3(){
+	$.post(
+		'./addtotable.php',
+		function(msg){
+			$('#msgphp').html(msg);
+		}
+		);
+}
+
+function openphp_4(){
+	$.post(
+		'./addupload.php',
+		function(msg){
+			$('#msgphp').html(msg);
+		}
+		);
+}
+
+
+function openphp_5(){
+	$.post(
+		'./chose_all.php',
+		function(msg){
+			$('#msgphp').html(msg);
+		}
+		);
+}
+
+function openphp_6(){
+	$.post(
+		'./chose_first_10.php',
+		function(msg){
+			$('#msgphp').html(msg);
+		}
+		);
+}
+
+function openphp_7(){
+	$.post(
+		'./delete.php',
+		function(msg){
+			$('#msgphp').html(msg);
+		}
+		);
+}
+
+function openphp_8(){
+	$.post(
+		'./addusers.php',
+		function(msg){
+			$('#msgphp').html(msg);
+		}
+		);
+}
+
+
+
+
+		
